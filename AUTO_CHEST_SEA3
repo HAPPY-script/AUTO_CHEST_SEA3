@@ -1,0 +1,258 @@
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+local destinations = {
+    Vector3.new(-4989.93, 338.71, -3017.57),--castle
+    Vector3.new(-4919.42, 371.00, -2845.09),
+    Vector3.new(-5076.29, 371.29, -3174.26),
+    Vector3.new(-4952.84, 314.50, -3173.75),
+    Vector3.new(-5021.88, 346.89, -2996.49),
+    Vector3.new(-5116.72, 316.29, -3177.03),
+    Vector3.new(-5336.59, 313.70, -2840.07),
+    Vector3.new(-5369.17, 313.93, -3035.47),
+    Vector3.new(-5719.71, 313.93, -2893.11),
+    Vector3.new(-5600.00, 313.70, -2719.75),
+    Vector3.new(-4924.23, 313.70, -2431.76),
+    Vector3.new(-5587.18, 313.70, -2161.97),
+    Vector3.new(-5234.38, 313.70, -3203.30),
+    Vector3.new(-5234.31, 1088.70, -2578.13),
+    Vector3.new(2499.46, 190.38, -7135.29),--tree
+    Vector3.new(2721.88, 432.42, -7094.70),
+    Vector3.new(1744.47, 38.59, -6974.22),
+    Vector3.new(2839.37, 167.25, -8022.92),
+    Vector3.new(2784.76, 115.74, -7664.16),
+    Vector3.new(2953.56, 456.83, -7490.25),
+    Vector3.new(3883.43, 160.50, -7027.89),
+    Vector3.new(4028.55, 298.22, -6122.64),
+    Vector3.new(-9476.08, 352.00, 3437.54),--dark castle
+    Vector3.new(-9575.97, 21.08, 4767.27),
+    Vector3.new(-9483.46, 142.08, 5495.13),
+    Vector3.new(-8877.82, 141.31, 5932.22),
+    Vector3.new(-8776.49, 142.30, 6277.52),
+    Vector3.new(-8748.78, 142.30, 6277.02),
+    Vector3.new(-9664.18, 271.08, 6273.33),
+    Vector3.new(-9522.51, 141.31, 6426.12),
+    Vector3.new(-10095.11, 208.12, 6235.88),
+    Vector3.new(-9543.85, 3456.70, 6705.38),
+    Vector3.new(-9498.79, 3456.70, 6706.81),
+    Vector3.new(-9524.61, 3456.70, 6744.60),
+    Vector3.new(-167.03, 3084.22, 5577.17),--port
+    Vector3.new(-731.21, 43.71, 5554.82),
+    Vector3.new(-1057.20, 73.71, 5825.20),
+    Vector3.new(-204.56, 73.71, 6017.24),
+    Vector3.new(57.98, 73.71, 5904.27),
+    Vector3.new(305.75, 73.71, 6018.06),
+    Vector3.new(-1668.13, 145.72, 5892.73),
+    Vector3.new(-1293.46, 224.36, 6524.50),
+    Vector3.new(3496.92, 203.25, 323.54),--woman
+    Vector3.new(3809.46, 479.81, -1767.22),
+    Vector3.new(4103.27, 90.41, -2121.89),
+    Vector3.new(6159.19, 51.50, -1991.00),
+    Vector3.new(6247.61, 720.94, -1922.19),
+    Vector3.new(6498.23, 552.72, -2096.59),
+    Vector3.new(6497.46, 221.25, -494.23),
+    Vector3.new(6812.79, 378.36, 116.45),
+    Vector3.new(6590.20, 111.61, 2048.76),
+    Vector3.new(6032.43, 429.58, 1390.75),
+    Vector3.new(5701.54, 427.99, 1412.31),
+    Vector3.new(5354.16, 473.85, 1822.74),
+    Vector3.new(5520.90, 209.93, 1730.37),
+    Vector3.new(5910.30, 51.36, 2343.34),
+    Vector3.new(5561.73, 427.99, 1814.71),
+    Vector3.new(5702.02, 427.99, 1412.37),
+    Vector3.new(4492.62, 276.93, 1517.30),
+    Vector3.new(4583.14, 1279.74, 1187.21),
+    Vector3.new(5125.92, 601.56, 540.37),
+    Vector3.new(5937.10, 662.27, 261.49),
+    Vector3.new(5434.66, 601.55, -50.90),
+    Vector3.new(-16142.85, 1324.59, 105.55),--tiki
+    Vector3.new(-16459.64, 366.46, 306.46),
+    Vector3.new(-16820.35, 224.35, 290.57),
+    Vector3.new(-16450.54, 232.61, 234.11),
+    Vector3.new(-16427.48, 243.87, 577.38),
+    Vector3.new(-16224.31, 137.17, 1027.62),
+    Vector3.new(-16944.53, 72.09, 1129.49),
+    Vector3.new(-855.78, 785.92, -10645.07),--ice cream
+    Vector3.new(-472.26, 226.05, -11044.52),
+    Vector3.new(-853.71, 35.93, -10817.93),
+    Vector3.new(-1139.38, 232.24, -10880.41),
+    Vector3.new(-1087.85, 39.33, -11240.64),
+    Vector3.new(-814.29, 65.80, -11180.76),
+    Vector3.new(-905.03, 72.16, -11468.40),
+    Vector3.new(-572.40, 65.80, -11246.89),
+    Vector3.new(-407.40, 65.80, -10861.84),
+    Vector3.new(-60.25, 16.92, -12056.35),--socola
+    Vector3.new(216.78, 126.57, -12599.35),
+    Vector3.new(327.14, 24.77, -12909.42),
+    Vector3.new(500.97, 59.12, -13075.51),
+    Vector3.new(288.54, 24.77, -12841.28),
+    Vector3.new(-1557.83, 348.89, -11602.01),--cake
+    Vector3.new(-2552.71, 37.78, -12278.31),
+    Vector3.new(-1865.57, 538.45, -12458.13),
+    Vector3.new(-1821.38, 37.78, -12441.56),
+    Vector3.new(-2071.93, 53.38, -12673.53),
+    Vector3.new(-2510.99, 91.10, -12901.93),
+    Vector3.new(-1813.24, 1250.86, -12624.43),
+    Vector3.new(-2263.24, 192.07, -10620.42),--peanut
+    Vector3.new(-2116.09, 38.08, -10720.51),
+    Vector3.new(-1827.17, 38.08, -10547.23),
+    Vector3.new(-2088.92, 38.08, -10406.47),
+    Vector3.new(-2082.94, 38.08, -10068.12),
+    Vector3.new(-2375.91, 63.31, -10124.57),
+    Vector3.new(-2410.78, 38.08, -10344.80),
+    Vector3.new(-12742.81, 2627.53, -7610.17),--mansion
+    Vector3.new(-12634.96, 459.46, -7428.99),
+    Vector3.new(-12487.38, 336.89, -7527.30),
+    Vector3.new(-12985.90, 363.20, -8008.69),
+    Vector3.new(-13491.24, 332.91, -7652.25),
+    Vector3.new(-13273.98, 332.36, -7769.60),
+    Vector3.new(-13742.11, 332.35, -7815.92),
+    Vector3.new(-13590.50, 361.67, -8414.25),
+    Vector3.new(-13568.26, 331.86, -8738.29),
+    Vector3.new(-12150.28, 768.64, -6755.05),
+    Vector3.new(-12274.25, 661.30, -8533.47),
+    Vector3.new(-12048.73, 331.70, -9034.06),
+    Vector3.new(-11820.83, 338.32, -9047.40),
+    Vector3.new(-11000.88, 453.42, -9471.33),
+    Vector3.new(-11154.78, 569.68, -8993.51),
+    Vector3.new(-10121.52, 352.74, -9536.72),--longma
+    Vector3.new(-10145.37, 353.75, -9301.48),
+    Vector3.new(-10246.13, 353.75, -9301.48),
+    Vector3.new(-10595.31, 331.70, -9589.78),
+    Vector3.new(-10487.22, 568.10, -10307.69),
+    Vector3.new(-11179.25, 331.71, -10521.90),--mansion
+    Vector3.new(-11673.42, 382.90, -10420.77),
+    Vector3.new(-12116.08, 331.72, -10807.19),
+    Vector3.new(-12480.70, 522.61, -10112.04),
+    Vector3.new(-13458.39, 391.53, -9859.25),
+    Vector3.new(-13537.59, 472.19, -9988.37),
+    Vector3.new(-12456.89, 1162.92, -9801.37),
+    Vector3.new(-13317.94, 863.42, -7272.79),
+    Vector3.new(-13425.65, 469.56, -6875.68),
+    Vector3.new(-14107.52, 1159.12, -8473.36),
+}
+
+local stepDistance = 70
+local isActive = false
+local currentIndex = 1
+
+local function distance(pos1, pos2)
+    return (pos1 - pos2).Magnitude
+end
+
+local function createBlock()
+    local block = Instance.new("Part")
+    block.Size = Vector3.new(5, 1, 5)
+    block.Anchored = true
+    block.Transparency = 0.5
+    block.BrickColor = BrickColor.new("Bright blue")
+    block.Parent = game.Workspace
+    return block
+end
+
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local ToggleButton = Instance.new("TextButton")
+local CloseButton = Instance.new("TextButton")
+local TitleLabel = Instance.new("TextLabel")
+
+ScreenGui.Parent = game.CoreGui
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(205, 133, 63)
+Frame.BorderSizePixel = 2
+Frame.Position = UDim2.new(0.2, 0, 0.2, 0)
+Frame.Size = UDim2.new(0, 300, 0, 200)
+Frame.Active = true
+Frame.Draggable = true
+
+TitleLabel.Parent = Frame
+TitleLabel.BackgroundColor3 = Color3.fromRGB(218, 165, 32)
+TitleLabel.BorderSizePixel = 0
+TitleLabel.Position = UDim2.new(0.1, 0, 0, 0)
+TitleLabel.Size = UDim2.new(0, 200, 0, 50)
+TitleLabel.Font = Enum.Font.SourceSansBold
+TitleLabel.Text = "AUTO CHEST SEA 3"
+TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TitleLabel.TextScaled = true
+
+ToggleButton.Parent = Frame
+ToggleButton.BackgroundColor3 = Color3.fromRGB(34, 139, 34)
+ToggleButton.Position = UDim2.new(0.25, 0, 0.4, 0)
+ToggleButton.Size = UDim2.new(0, 150, 0, 50)
+ToggleButton.Font = Enum.Font.SourceSansBold
+ToggleButton.Text = "Start"
+ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+ToggleButton.TextScaled = true
+
+CloseButton.Parent = Frame
+CloseButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+CloseButton.Position = UDim2.new(0, 0, 0, 0)
+CloseButton.Size = UDim2.new(0, 30, 0, 30)
+CloseButton.Font = Enum.Font.SourceSansBold
+CloseButton.Text = "X"
+CloseButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseButton.TextScaled = true
+
+local function teleportToNextDestination()
+    local block = createBlock()
+
+    while isActive do
+        local destination = destinations[currentIndex]
+        while distance(humanoidRootPart.Position, destination) > stepDistance and isActive do
+            
+            local direction = (destination - humanoidRootPart.Position).unit
+            humanoidRootPart.CFrame = humanoidRootPart.CFrame + direction * stepDistance
+
+            
+            block.Position = humanoidRootPart.Position - Vector3.new(0, 3, 0)
+            wait(0.2)
+        end
+        
+        
+        if distance(humanoidRootPart.Position, destination) <= stepDistance then
+            humanoidRootPart.CFrame = CFrame.new(destination)
+
+            
+            local startTime = tick()
+            while tick() - startTime < 1 do
+                local randomOffset = Vector3.new(math.random(-100, 100) / 100, 0, math.random(-100, 100) / 100) -- Offset ngẫu nhiên
+                humanoidRootPart.CFrame = CFrame.new(destination) + randomOffset
+                wait(0.1)
+            end
+        end
+
+        wait(0.1)
+
+        
+        currentIndex = currentIndex + 1
+        if currentIndex > #destinations then
+            currentIndex = 1 
+        end
+    end
+
+    block:Destroy()
+end
+
+
+ToggleButton.MouseButton1Click:Connect(function()
+    isActive = not isActive
+    if isActive then
+        ToggleButton.Text = "Stop"
+        currentIndex = 1
+        teleportToNextDestination()
+    else
+        ToggleButton.Text = "Start"
+    end
+end)
+
+
+CloseButton.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy()
+end)
+
+
+player.CharacterAdded:Connect(function(newCharacter)
+    character = newCharacter
+    humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+end)
